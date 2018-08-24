@@ -1,11 +1,10 @@
 package com.smile.tkpro.pojo;
 
 
+import com.smile.tkpro.base.BaseDomain;
 import lombok.Data;
 
-import javax.persistence.Id;
 import javax.persistence.Table;
-import java.io.Serializable;
 import java.util.Date;
 /**
  * @Auther: chengde
@@ -15,15 +14,9 @@ import java.util.Date;
 
 @Data
 @Table(name="student")
-public class Student implements Serializable {
+public class Student extends BaseDomain {
 
-    private static final long serialVersionUID = -7450320312415814857L;
-
-    /**
-     * 学生id
-     */
-    @Id
-    private  String sno;
+    private  int test;
 
     /**
      * 学生姓名
@@ -48,8 +41,7 @@ public class Student implements Serializable {
     public Student() {
     }
 
-    public Student(String sno, String sname, String ssex, Date sbirthday, String sclass) {
-        this.sno = sno;
+    public Student(String sname, String ssex, Date sbirthday, String sclass) {
         this.sname = sname;
         this.ssex = ssex;
         this.sbirthday = sbirthday;
