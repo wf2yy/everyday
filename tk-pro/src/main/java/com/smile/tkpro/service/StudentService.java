@@ -28,7 +28,39 @@ public class StudentService {
 
     }
 
+    /**
+     * 查找所有学生
+     * @return
+     */
     public List<Student> findAll(){
         return studentMapper.selectAll();
+    }
+
+    /**
+     * 添加学生
+     * @param student
+     * @return
+     */
+    public int addStudent(Student student){
+        return studentMapper.insertSelective(student);
+    }
+
+
+    /**
+     * 更新学生，传什么，更新什么
+     * @param student
+     * @return
+     */
+    public int updateStudent(Student student){
+        return studentMapper.updateByPrimaryKeySelective(student);
+    }
+
+    /**
+     * 根据id删除学生
+     * @param id
+     * @return
+     */
+    public int deleteStudent(Long id){
+        return studentMapper.deleteByPrimaryKey(id);
     }
 }
