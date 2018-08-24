@@ -12,6 +12,6 @@ public class UserController {
     public  void  test(){
         Student s = new Student();
         s.getSname();
-        String test = "试试";
+        String test = "试试，我再试试";
     }
 }
