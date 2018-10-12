@@ -1,8 +1,6 @@
 package com.smile.tkpro.service;
 
-import com.smile.tkpro.mapper.StudentMapper;
 import com.smile.tkpro.pojo.Student;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -13,37 +11,29 @@ import java.util.List;
  * @Description:
  */
 @Service
-public class StudentService {
+public interface StudentService {
 
-    @Autowired
-    private StudentMapper studentMapper;
+
 
     /**
      * 根据id 查找Student
-     * @param sno
+     * @param id
      * @return
      */
-    public Student findStudentById(String sno){
-        return studentMapper.selectByPrimaryKey(sno);
-
-    }
+   Student findStudentById(Long id);
 
     /**
      * 查找所有学生
      * @return
      */
-    public List<Student> findAll(){
-        return studentMapper.selectAll();
-    }
+    public List<Student> findAll();
 
     /**
      * 添加学生
      * @param student
      * @return
      */
-    public int addStudent(Student student){
-        return studentMapper.insertSelective(student);
-    }
+    public int addStudent(Student student);
 
 
     /**
@@ -51,16 +41,12 @@ public class StudentService {
      * @param student
      * @return
      */
-    public int updateStudent(Student student){
-        return studentMapper.updateByPrimaryKeySelective(student);
-    }
+    public int updateStudent(Student student);
 
     /**
      * 根据id删除学生
      * @param id
      * @return
      */
-    public int deleteStudent(Long id){
-        return studentMapper.deleteByPrimaryKey(id);
-    }
+    public int deleteStudent(Long id);
 }

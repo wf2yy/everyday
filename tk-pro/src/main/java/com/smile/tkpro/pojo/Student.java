@@ -1,6 +1,7 @@
 package com.smile.tkpro.pojo;
 
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.smile.tkpro.base.BaseDomain;
 import lombok.Data;
 
@@ -16,7 +17,6 @@ import java.util.Date;
 @Table(name="student")
 public class Student extends BaseDomain {
 
-    private  int test;
 
     /**
      * 学生姓名
@@ -31,6 +31,7 @@ public class Student extends BaseDomain {
     /**
      * 学生生日
      */
+    @JsonFormat(locale = "zh", timezone = "GMT+8", pattern = "yyyy-MM-dd HH:mm:ss")
     private  Date sbirthday;
 
     /**

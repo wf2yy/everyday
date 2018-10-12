@@ -53,6 +53,7 @@ public class BaseDomain implements Serializable {
      * 注意 在这里 基本数据类型 会直接忽略库表字段映射，不需要加@Transient
      * 但是你写成 Integer 类型 就必须 加 @Transient ，否则报错，找不到这个字段
      */
+    @JsonIgnore
     private int serialNumber;
 
 
