@@ -33,11 +33,8 @@ public class SwaggerConf {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("用户信息系统接口文档")
-                .description("学生和用户接口")
-                .termsOfServiceUrl("")
-                .license("")
-                .licenseUrl("")
-                .version(" xxx ")
+                .description("学生接口")
+                .version("v1.0")
                 .build();
     }
 
