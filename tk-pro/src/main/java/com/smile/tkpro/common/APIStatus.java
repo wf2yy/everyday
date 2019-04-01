@@ -3,7 +3,7 @@ package com.smile.tkpro.common;
 /**
  * 
  * <p>Description: [API 请求结果-状态码]</p>
- * @author  <a href="mailto: hanshixiong@camelotchina.com">郑成德</a>
+ * @author  郑成德
  * @version 1.0 
  */
 public enum APIStatus {

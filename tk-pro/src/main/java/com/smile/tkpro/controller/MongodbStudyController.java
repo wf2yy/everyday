@@ -1,10 +1,15 @@
 package com.smile.tkpro.controller;
 
+import com.alibaba.fastjson.JSONObject;
+import com.smile.tkpro.common.ApiResponse;
 import com.smile.tkpro.pojo.Article;
 import com.smile.tkpro.pojo.Person;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.Query;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author chengde
@@ -31,6 +37,10 @@ public class MongodbStudyController {
     @Autowired
     private MongoTemplate mongoTemplate;
 
+    /**
+     * 单条数据添加
+     * @return
+     */
     @ApiOperation(value = "添加一个Person到mongodb",notes = "单条数据添加")
     @PostMapping("/addOnePerson")
     private String savePerson(){
@@ -44,6 +54,10 @@ public class MongodbStudyController {
              return "ok";
     }
 
+    /**
+     * 添加单条记录入库
+     * @return
+     */
     @ApiOperation(value = "添加一个到mongodb",notes = "单条数据添加")
     @GetMapping("/addOne")
     private String save(){
@@ -60,6 +74,10 @@ public class MongodbStudyController {
         return "ok";
     }
 
+    /**
+     * 批量添加入库
+     * @return
+     */
     @ApiOperation(value = "添加一个集合到mongodb",notes = "集合数据添加")
     @GetMapping("/addList")
     private String saveList(){
@@ -146,4 +164,88 @@ public class MongodbStudyController {
         }
         return "ok";
     }
+
+
+    /**
+     * mongodb 删除操作
+     * @return
+     */
+    @ApiOperation(value = "删除操作",notes = "集合数据删除")
+    @PostMapping("/delete")
+    private String delete(){
+
+        Query query = Query.query(Criteria.where("author").is("无双 6"));
+        //删除所有
+        //mongoTemplate.remove(query,Article.class);
+        //如果实体类中没有配置 集合名称，可以直接在这里指定使用
+        //DeleteResult article = mongoTemplate.remove(query, "article");
+
+        //找到并删除符合条件的第一个，返回被删除的记录
+       /* Article andRemove = mongoTemplate.findAndRemove(query, Article.class);
+        System.out.println(andRemove);*/
+
+        //找到并删除符合条件的所有记录，返回被删除的所有记录
+       /* List<Article> allAndRemove = mongoTemplate.findAllAndRemove(query, Article.class);
+        System.out.println(allAndRemove);*/
+
+        //删除集合
+        //mongoTemplate.dropCollection("article_info");
+
+        //删除数据库
+        //mongoTemplate.getDb().drop();
+
+        return "ok";
+    }
+
+    /**
+     * mongodb 查询操作
+     * @return
+     */
+    @ApiOperation(value = "查询操作",notes = "集合数据查询")
+    @PostMapping("/select")
+    private JSONObject select(@RequestParam Integer page, @RequestParam Integer size){
+
+        //查询集合中的所有数据
+        //List<Article> all = mongoTemplate.findAll(Article.class);
+
+        Query query = Query.query(Criteria.where("author").is("无双 5"));
+        //查询符合条件的一条数据
+        //Article one = mongoTemplate.findOne(query, Article.class);
+
+        //查询符合条件的所有数据
+        /*List<Article> articles = mongoTemplate.find(query, Article.class);
+        System.out.println(articles);*/
+
+        //查询符合条件的数量
+        /*long count = mongoTemplate.count(query, Article.class);
+        System.out.println(count);*/
+
+        //模糊查询
+        Query moSelect = Query.query(Criteria.where("author").regex("无双"));
+       /* List<Article> articles = mongoTemplate.find(moSelect, Article.class);
+        System.out.println(articles);*/
+
+        //and 查询
+        /*Query query1 = Query.query(Criteria.where("").andOperator(
+                Criteria.where("author").is("无双 5"),
+                Criteria.where("visit_count").is(1)
+        ));
+        List<Article> articles = mongoTemplate.find(query1, Article.class);*/
+
+        //or 查询
+        /*Query query1 = Query.query(Criteria.where("").orOperator(
+                Criteria.where("author").is("无双 5"),
+                Criteria.where("visit_count").is(0)
+        ));*/
+        /*List<Article> articles = mongoTemplate.find(query1, Article.class);*/
+
+        //分页查询
+        PageRequest pageRequest = PageRequest.of(page-1, size, Sort.Direction.DESC, "visit_count");
+        List<Article> results = mongoTemplate.find(moSelect.with(pageRequest), Article.class);
+        System.out.println(results.size());
+        PageImpl<Article> articles = new PageImpl<>(results, pageRequest, results.size());
+
+        return ApiResponse.success(articles);
+    }
+
 }
